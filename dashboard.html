@@ -77,10 +77,10 @@
     let allData = [];
 
     function loadData() {
-      fetch("https://api.sheety.co/xxx/emgData/emgData")
+      fetch("https://sheetdb.io/api/v1/sheets/9h7pny89x5ypm")
 	  .then(res => res.json())
 	  .then(data => {
-	    allData = data.emgData; // Note: based on key name Sheety gives
+	    allData = data.data; // Note: based on key name Sheety gives
 	    populateTable(allData);
 	  });
     }
