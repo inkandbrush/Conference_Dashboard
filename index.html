@@ -50,21 +50,27 @@
           Region: form.Region.value,
           Timestamp: new Date().toLocaleString()
         };
-
+try {
+      
         const res = await fetch("https://api.sheety.co/1S_MNsVioUlA9BefkphmxHDLChetemawQuHq0tP2fliw/pml2/sheet1", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ sheet1: data })
         });
 
-        if (res.ok) {
-          alert("✅ Data submitted!");
-          form.reset();
-          window.location.href = "dashboard.html";
-        } else {
-          alert("❌ Submission failed.");
-        }
-      });
+     
+        if (response.ok) {
+        alert('Data saved successfully!');
+        document.getElementById('dataForm').reset();
+      } else {
+        alert('Failed to save data. Check console for details.');
+        console.error(await response.text());
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Check the console.');
+    }
+     });
     };
   </script>
 </body>
