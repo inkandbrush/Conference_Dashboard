@@ -39,7 +39,7 @@ input, select, button { margin: 10px 0; width: 100%; padding: 10px; }
 
 </form>
 <script>
-document.getElementById("emgForm").addEventListener("submit", async function (e) {
+document.getElementById("emgData").addEventListener("submit", async function (e) {
 e.preventDefault();
 const form = e.target;
 const data = {
@@ -51,7 +51,7 @@ Region: form.Region.value,
 Timestamp: new Date().toLocaleString()
 };
 
-const res = await fetch("https://workdrive.zohopublic.in/sheet/open/dwk5g1b805286256d4e20bb6daf4e1d8d3d48", {
+const res = await fetch("https://api.sheety.co/342b9a569b6a594c36282312295f8677/emgLb/emgData", {
 method: "POST",
 headers: { "Content-Type": "application/json" },
 body: JSON.stringify(data)
