@@ -77,12 +77,12 @@
     let allData = [];
 
     function loadData() {
-      fetch("https://workdrive.zohopublic.in/sheet/open/dwk5ge62f91488a9b44b19a9ed5d2a735a752")
-        .then(res => res.json())
-        .then(data => {
-          allData = data;
-          populateTable(data);
-        });
+      fetch("https://api.sheety.co/xxx/emgData/emgData")
+	  .then(res => res.json())
+	  .then(data => {
+	    allData = data.emgData; // Note: based on key name Sheety gives
+	    populateTable(allData);
+	  });
     }
 
     function filterByRegion() {
