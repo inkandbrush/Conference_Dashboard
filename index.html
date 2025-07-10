@@ -39,24 +39,24 @@ input, select, button { margin: 10px 0; width: 100%; padding: 10px; }
 
 </form>
 <script>
-document.getElementById("emgData").addEventListener("submit", async function (e) {
-e.preventDefault();
-const form = e.target;
-const data = {
-DrName: form.DrName.value,
-Speciality: form.Speciality.value,
-SSMName: form.SSMName.value,
-EMG: parseFloat(form.EMG.value),
-Region: form.Region.value,
-Timestamp: new Date().toLocaleString()
-};
+document.getElementById("emgForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    DrName: form.DrName.value,
+    Speciality: form.Speciality.value,
+    SSMName: form.SSMName.value,
+    EMG: parseFloat(form.EMG.value),
+    Region: form.Region.value,
+    Timestamp: new Date().toLocaleString()
+  };
 
-const res = await fetch("https://api.sheety.co/342b9a569b6a594c36282312295f8677/pml2/emgData", {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ emgData: data })
-});
-
+  const res = await fetch("https://api.sheety.co/342b9a569b6a594c36282312295f8677/pml2/sheet1", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sheet1: data })
+  });
+  
 if (res.ok) {
 alert("✅ Data submitted!");
 form.reset();
