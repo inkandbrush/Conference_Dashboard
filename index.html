@@ -51,11 +51,10 @@ Region: form.Region.value,
 Timestamp: new Date().toLocaleString()
 };
 
-const res = await fetch("https://api.sheety.co/342b9a569b6a594c36282312295f8677/emgData/emgData", {
+const res = await fetch("https://api.sheety.co/342b9a569b6a594c36282312295f8677/pml2/emgData", {
 method: "POST",
 headers: { "Content-Type": "application/json" },
-
-body: JSON.stringify({ emgLB: data })
+body: JSON.stringify({ emgData: data })
 });
 
 if (res.ok) {
