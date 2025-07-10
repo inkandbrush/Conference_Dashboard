@@ -61,7 +61,7 @@ try {
      
         if (response.ok) {
         alert('Data saved successfully!');
-        document.getElementById('dataForm').reset();
+        document.getElementById('emgForm').reset();
       } else {
         alert('Failed to save data. Check console for details.');
         console.error(await response.text());
