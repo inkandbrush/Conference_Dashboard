@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EMG Dashboard</title>
+  <style>
+    body {
+      /*background-color: red;*/
+		background-image: url('db.png');
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+    }
+    header, footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      /*background-color: #b30000;*/
+    }
+    header img, footer img {
+      height: 50px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      color: black;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    select {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="PML.png" alt="PML Logo">
+	  <img src="leaderboard.png" alt="Leaderboard">
+    <img src="logo.png" alt="JOGO Logo">
+  </header>
+
+  <h2>EMG Scoreboard</h2>
+  <label>Filter by Region:
+    <select id="regionFilter" onchange="filterByRegion()">
+      <option value="">Select Region</option>
+      <option value="Region 1">Region 1</option>
+      <option value="Region 2">Region 2</option>
+      <option value="Region 3">Region 3</option>
+      <option value="Region 4">Region 4</option>
+    </select>
+  </label>
+  <button onclick="goBack()">Back to Form</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Sr.No</th>
+        <th>Dr Name</th>
+        <th>Speciality</th>
+        <th>CT</th>
+        <th>EMG</th>
+        <th>Region</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody"></tbody>
+  </table>
+
+  <footer>
+    <img src="footer.png" alt="WCW Logo">
+  </footer>
+
+  <script>
+    let allData = [];
+
+    function loadData() {
+      fetch("https://workdrive.zohopublic.in/sheet/open/dwk5ge62f91488a9b44b19a9ed5d2a735a752")
+        .then(res => res.json())
+        .then(data => {
+          allData = data;
+          populateTable(data);
+        });
+    }
+
+    function filterByRegion() {
+      const region = document.getElementById("regionFilter").value;
+      const filtered = allData
+        .filter(row => row.region === region)
+        .sort((a, b) => b.emg - a.emg);
+      populateTable(filtered);
+    }
+
+    function populateTable(data) {
+      const tbody = document.getElementById("dataBody");
+      tbody.innerHTML = "";
+      data.forEach((row, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${row.drName}</td>
+          <td>${row.speciality}</td>
+          <td>${row.ct}</td>
+          <td>${row.emg}</td>
+          <td>${row.region}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
