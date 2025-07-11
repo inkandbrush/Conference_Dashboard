@@ -51,15 +51,11 @@
           Timestamp: new Date().toLocaleString()
         };
 try {
-      
         const res = await fetch("https://api.steinhq.com/v1/storages/6870cdc4c088333365b76d08", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" ,
-                   Authorization': 'None'},
-          body: JSON.stringify({ data }),
-          
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
         });
-
      
         if (response.ok) {
         alert('Data saved successfully!');
