@@ -74,47 +74,65 @@
   </footer>
 
   <script>
-    let allData = [];
+  window.addEventListener("DOMContentLoaded", function () {
+    const API_URL = "https://api.steinhq.com/v1/storages/6870cdc4c088333365b76d08";
 
-    function loadData() {
-      fetch("https://sheetdb.io/api/v1/sheets/9h7pny89x5ypm")
-	  .then(res => res.json())
-	  .then(data => {
-	    allData = data.data; // Note: based on key name Sheety gives
-	    populateTable(allData);
-	  });
+    async function fetchData() {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      return data.sort((a, b) => {
+        const emgA = parseFloat(a.EMG) || 0;
+        const emgB = parseFloat(b.EMG) || 0;
+        return emgB - emgA;
+      });
     }
 
-    function filterByRegion() {
-      const region = document.getElementById("regionFilter").value;
-      const filtered = allData
-        .filter(row => row.region === region)
-        .sort((a, b) => b.emg - a.emg);
-      populateTable(filtered);
-    }
-
-    function populateTable(data) {
-      const tbody = document.getElementById("dataBody");
+    function renderTable(data) {
+      const tbody = document.querySelector("#emgTable tbody");
+      if (!tbody) return console.error("❌ tbody not found");
       tbody.innerHTML = "";
       data.forEach((row, index) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${index + 1}</td>
-          <td>${row.drName}</td>
-          <td>${row.speciality}</td>
-          <td>${row.ct}</td>
-          <td>${row.emg}</td>
-          <td>${row.region}</td>
+          <td>${row.DrName}</td>
+          <td>${row.Speciality}</td>
+          <td>${row.SSMName}</td>
+          <td>${row.EMG}</td>
+          <td>${row.Region}</td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    function goBack() {
-      window.location.href = "index.html";
+    function populateFilter(data) {
+      const select = document.getElementById("regionFilter");
+      const regions = [...new Set(data.map(r => r.Region))];
+      regions.forEach(region => {
+        const opt = document.createElement("option");
+        opt.value = region;
+        opt.textContent = region;
+        select.appendChild(opt);
+      });
+
+      select.addEventListener("change", () => {
+        const filtered = select.value
+          ? data.filter(r => r.Region === select.value)
+          : data;
+        renderTable(filtered);
+      });
     }
 
-    window.onload = loadData;
-  </script>
+   
+
+    async function init() {
+      const data = await fetchData();
+      renderTable(data);
+      populateFilter(data);
+    }
+
+    init();
+  });
+</script>
 </body>
 </html>
