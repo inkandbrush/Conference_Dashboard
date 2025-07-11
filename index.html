@@ -38,38 +38,32 @@
   </form>
 
   <script>
-    window.onload = function () {
-      document.getElementById("emgForm").addEventListener("submit", async function (e) {
+        document.getElementById("emgForm").addEventListener("submit", async function (e) {
         e.preventDefault();
         const form = e.target;
         const data = {
-          DrName: form.DrName.value,
-          Speciality: form.Speciality.value,
-          SSMName: form.SSMName.value,
-          EMG: parseFloat(form.EMG.value),
-          Region: form.Region.value,
-          Timestamp: new Date().toLocaleString()
+        DrName: form.DrName.value,
+        Speciality: form.Speciality.value,
+        SSMName: form.SSMName.value,
+        EMG: parseFloat(form.EMG.value),
+        Region: form.Region.value,
+        Timestamp: new Date().toLocaleString()
         };
-try {
+        
         const res = await fetch("https://api.steinhq.com/v1/storages/6870cdc4c088333365b76d08", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
         });
-     
-        if (response.ok) {
-        alert('Data saved successfully!');
-        document.getElementById('emgForm').reset();
-      } else {
-        alert('Failed to save data. Check console for details.');
-        console.error(await response.text());
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Check the console.');
-    }
-     });
-    };
-  </script>
+        
+        if (res.ok) {
+        alert("✅ Data submitted!");
+        form.reset();
+        window.location.href = "Dashboard.html";
+        } else {
+        alert("❌ Submission failed.");
+        }
+        });
+</script>
 </body>
 </html>
